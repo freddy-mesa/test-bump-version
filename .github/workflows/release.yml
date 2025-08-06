@@ -14,6 +14,7 @@ jobs:
         run: sudo apt-get install python3-semver
       - name: Bump version and push tag
         run: |
-          current_version=$(git -P ls-remote --tags --sort=version:refname 2> /dev/null | grep -v '\^{}' | head -1 | cut -d'/' -f3)
+          tag_version=$(git -P ls-remote --tags --sort=version:refname 2> /dev/null | grep -v '\^{}' | tail -n 1 | cut -d'/' -f3)
+          current_version="${tag_version}#v"
           new_version=$(pysemver bump prerelease $current_version)
           echo "Bump version to $new_version"
