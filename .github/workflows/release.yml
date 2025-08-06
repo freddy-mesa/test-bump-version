@@ -15,6 +15,5 @@ jobs:
       - name: Bump version and push tag
         run: |
           tag_version=$(git -P ls-remote --tags --sort=version:refname 2> /dev/null | grep -v '\^{}' | tail -n 1 | cut -d'/' -f3)
-          current_version="${tag_version#v}"
-          new_version=$(pysemver bump prerelease $current_version)
+          new_version=$(pysemver bump prerelease "${tag_version#v}")
           echo "Bump version to $new_version"
